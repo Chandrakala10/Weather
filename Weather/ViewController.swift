@@ -40,8 +40,8 @@ class ViewController: UIViewController {
 
 extension ViewController: MKMapViewDelegate {
     public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool){
-        weatherManager.downloadWeatherData(type: .geoLocation(mapView.region.center.latitude, mapView.region.center.longitude)) {
-            print("done")
+        weatherManager.downloadWeatherData(type: .geoLocation(mapView.region.center.latitude, mapView.region.center.longitude)) { weather in
+            
         }
     }
     

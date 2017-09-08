@@ -7,6 +7,10 @@
 //
 
 import Foundation
+import Alamofire
+// MARK: - Types
+
+public typealias WeatherServiceCallback = (Result<Weather>) -> Void
 
 public enum ServiceAPIType {
     case geoLocation(Double, Double)
@@ -16,5 +20,5 @@ public enum ServiceAPIType {
 protocol WeatherService {
     static var apiKey: String { get }
     static var baseURL: String { get }
-    func downloadWeatherData(type:ServiceAPIType, completed: @escaping ()-> ())
+    func downloadWeatherData(type:ServiceAPIType, completion: @escaping WeatherServiceCallback)
 }
