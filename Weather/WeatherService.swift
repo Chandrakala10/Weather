@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum ServiceAPIType {
-    case geoLocation(String, String)
+public enum ServiceAPIType {
+    case geoLocation(Double, Double)
     case cityID(String)
     case city(String)
 }
 protocol WeatherService {
-    
+    static var apiKey: String { get }
     static var baseURL: String { get }
     func downloadWeatherData(type:ServiceAPIType, completed: @escaping ()-> ())
 }
