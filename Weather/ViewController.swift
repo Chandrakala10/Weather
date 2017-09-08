@@ -25,6 +25,11 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillAppear (_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             mapView.showsUserLocation = true
@@ -53,7 +58,7 @@ extension ViewController: UIGestureRecognizerDelegate {
 
 extension ViewController: MKMapViewDelegate {
     
-    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         
         guard isDoubleTapped else {
             return
@@ -61,10 +66,10 @@ extension ViewController: MKMapViewDelegate {
         
         isDoubleTapped = false
         weatherManager.downloadWeatherData(type: .geoLocation(mapView.region.center.latitude,
-                                                              mapView.region.center.longitude)) { result in
+                                                              mapView.region.center.longitude)) { [weak self] result in
                                                                 switch result {
                                                                 case .success(let weather):
-                                                                    print("Move to next screen")
+                                                                    self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
                                                                 case .failure(let error):
                                                                     print("Display error")
                                                                     

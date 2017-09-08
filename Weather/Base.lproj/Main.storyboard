@@ -42,7 +42,7 @@
                     <connections>
                         <outlet property="doubleTap" destination="TYI-S6-jxp" id="aRo-95-R05"/>
                         <outlet property="mapView" destination="CrU-hF-mmZ" id="jDa-9h-BGi"/>
-                        <segue destination="3EF-QT-SgL" kind="show" id="tmV-Sg-oj1"/>
+                        <segue destination="3EF-QT-SgL" kind="show" identifier="WeatherInfo" id="tmV-Sg-oj1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="49" y="110"/>
         </scene>
-        <!--View Controller-->
+        <!--Weather-->
         <scene sceneID="rR7-OX-pjA">
             <objects>
-                <viewController id="3EF-QT-SgL" sceneMemberID="viewController">
+                <viewController title="Weather" id="3EF-QT-SgL" customClass="WeatherInfoViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Y8k-Bn-IhN"/>
                         <viewControllerLayoutGuide type="bottom" id="A6Y-7l-rUY"/>
