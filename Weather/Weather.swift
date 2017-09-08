@@ -7,17 +7,18 @@
 //
 
 import Foundation
+
 public struct Weather {
     
     public let temp: String
     public let location: String
-    public let weather: String
+    public let description: String
     
     public init(temp: String,
                 location: String,
                 weather: String) {
         self.temp = temp
         self.location = location
-        self.weather = weather
+        self.description = weather
     }
 }

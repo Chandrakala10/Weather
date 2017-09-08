@@ -17,6 +17,7 @@ public enum ServiceAPIType {
     case cityID(String)
     case city(String)
 }
+
 protocol WeatherService {
     static var apiKey: String { get }
     static var baseURL: String { get }

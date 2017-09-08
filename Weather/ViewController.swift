@@ -65,10 +65,13 @@ extension ViewController: MKMapViewDelegate {
         }
         
         isDoubleTapped = false
+        Loader.show()
         weatherManager.downloadWeatherData(type: .geoLocation(mapView.region.center.latitude,
                                                               mapView.region.center.longitude)) { [weak self] result in
+                                                                Loader.dismiss()
                                                                 switch result {
                                                                 case .success(let weather):
+                                                                    print(weather)
                                                                     self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
                                                                 case .failure(let error):
                                                                     print("Display error")
