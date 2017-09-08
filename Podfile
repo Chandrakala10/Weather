@@ -6,7 +6,9 @@ target 'Weather' do
   use_frameworks!
 
   # Pods for Weather
-  pod 'Alamofire', '~> 4.0' 
+  pod 'Alamofire', '~> 4.0'
+  pod 'SVProgressHUD', '~> 1.1.3'
+   
   target 'WeatherTests' do
     inherit! :search_paths
     # Pods for testing
