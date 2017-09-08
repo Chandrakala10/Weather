@@ -22,9 +22,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CrU-hF-mmZ">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="0on-Pw-4az"/>
+                                    <outletCollection property="gestureRecognizers" destination="TYI-S6-jxp" appends="YES" id="TEe-MV-RqE"/>
                                 </connections>
                             </mapView>
                         </subviews>
@@ -38,11 +40,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="owV-8b-xmy"/>
                     <connections>
+                        <outlet property="doubleTap" destination="TYI-S6-jxp" id="aRo-95-R05"/>
                         <outlet property="mapView" destination="CrU-hF-mmZ" id="jDa-9h-BGi"/>
                         <segue destination="3EF-QT-SgL" kind="show" id="tmV-Sg-oj1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="TYI-S6-jxp">
+                    <connections>
+                        <action selector="handleDoubleTap:" destination="BYZ-38-t0r" id="Qo8-ag-GQ4"/>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="tAn-cg-T2x"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="49" y="110"/>
         </scene>

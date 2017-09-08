@@ -18,6 +18,8 @@ class WeatherManager: WeatherService {
         return "8e4b0aff9275ed52851bbf4c6522b405"
     }
     
+    var locationsWeather = [String: Weather]()
+    
     func downloadWeatherData(type:ServiceAPIType, completion: @escaping WeatherServiceCallback) {
         switch type {
         case .geoLocation(let lat, let lon):
