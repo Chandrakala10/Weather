@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -66,8 +67,44 @@
                     <view key="view" contentMode="scaleToFill" id="lTd-tD-Q1G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="bUn-xN-Qc9">
+                                <rect key="frame" x="16" y="20" width="343" height="647"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbM-hB-jhh">
+                                        <rect key="frame" x="89" y="0.0" width="165" height="268.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="80"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjK-TD-tvJ">
+                                        <rect key="frame" x="137" y="298.5" width="69.5" height="94.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d72-4P-flN">
+                                        <rect key="frame" x="127.5" y="423" width="88" height="224"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.25070788073968814" green="0.57316516552706065" blue="0.975145725388601" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="bUn-xN-Qc9" firstAttribute="leading" secondItem="lTd-tD-Q1G" secondAttribute="leadingMargin" id="FtD-m5-dvr"/>
+                            <constraint firstItem="bUn-xN-Qc9" firstAttribute="top" secondItem="Y8k-Bn-IhN" secondAttribute="bottom" id="ML8-BD-ov4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bUn-xN-Qc9" secondAttribute="trailing" id="Xui-3e-GEB"/>
+                            <constraint firstItem="A6Y-7l-rUY" firstAttribute="top" secondItem="bUn-xN-Qc9" secondAttribute="bottom" id="iFi-CN-gsQ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="location" destination="LjK-TD-tvJ" id="BOs-2S-QEW"/>
+                        <outlet property="temperature" destination="sbM-hB-jhh" id="5ml-cK-8nc"/>
+                        <outlet property="weatherInfo" destination="d72-4P-flN" id="N0B-fV-kwW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qjf-76-jPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

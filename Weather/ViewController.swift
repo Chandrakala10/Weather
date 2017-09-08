@@ -47,6 +47,15 @@ class ViewController: UIViewController {
         isDoubleTapped = true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
+        case is WeatherInfoViewController:
+            let weatherInfo = segue.destination as! WeatherInfoViewController
+            weatherInfo.weather = weatherManager.locationsWeather[geoCode()]
+        default:
+            break
+        }
+    }
 }
 
 extension ViewController: UIGestureRecognizerDelegate {
@@ -58,7 +67,7 @@ extension ViewController: UIGestureRecognizerDelegate {
 
 extension ViewController: MKMapViewDelegate {
     
-    public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         guard isDoubleTapped else {
             return
@@ -70,8 +79,7 @@ extension ViewController: MKMapViewDelegate {
                                                               mapView.region.center.longitude)) { [weak self] result in
                                                                 Loader.dismiss()
                                                                 switch result {
-                                                                case .success(let weather):
-                                                                    print(weather)
+                                                                case .success:
                                                                     self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
                                                                 case .failure(let error):
                                                                     print("Display error")
@@ -85,6 +93,11 @@ extension ViewController: MKMapViewDelegate {
                                            span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0))
         mapView.setRegion(mapRegion, animated: true)
 
+    }
+    
+    func geoCode() -> String {
+        let center = mapView.region.center
+        return "lat=\(center.latitude)&lon=\(center.longitude)"
     }
 }
 

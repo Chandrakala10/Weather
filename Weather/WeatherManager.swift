@@ -23,14 +23,16 @@ class WeatherManager: WeatherService {
     func downloadWeatherData(type:ServiceAPIType, completion: @escaping WeatherServiceCallback) {
         switch type {
         case .geoLocation(let lat, let lon):
-            let url = URL(string:WeatherManager.baseURL+"lat=\(lat)&lon=\(lon)&appid="+WeatherManager.apiKey)!
-            Alamofire.request(url).responseJSON {
+            let geoCode = "lat=\(lat)&lon=\(lon)"
+            let url = URL(string:WeatherManager.baseURL+geoCode+"&appid="+WeatherManager.apiKey)!
+            Alamofire.request(url).responseJSON { [weak self]
                 response in
                 switch response.result {
                 case .success(let value) :
                     if let json = value as? JSON {
                         do {
                             let weather = try Weather(weatherResponse: json, type: type)
+                            self?.locationsWeather[geoCode] = weather
                             completion(.success(weather))
                         } catch (let error) {
                             completion(.failure(error))

@@ -10,17 +10,26 @@ import UIKit
 
 class WeatherInfoViewController: UIViewController {
     
-    var weatherInfo: Weather!
+    @IBOutlet weak var temperature: UILabel!
+    @IBOutlet weak var location: UILabel!
+    @IBOutlet weak var weatherInfo: UILabel!
+    var weather: Weather!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view, typically from a nib.
+        configure(weather)
     }
     
     override func viewWillAppear (_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    private func configure(_ weather: Weather) {
+        temperature.text = weather.temperature
+        location.text = weather.location
+        weatherInfo.text = weather.description
     }
     
     override func didReceiveMemoryWarning() {

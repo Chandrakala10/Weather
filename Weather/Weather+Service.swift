@@ -32,6 +32,6 @@ extension Weather {
             let weather = weatherArray.first else { throw JSONError.error(forKey: Keys.weather, json: payload) }
         guard let description = weather[Keys.main] as? String else { throw JSONError.error(forKey: Keys.main, json: payload) }
         
-        self = Weather(temp: String(format: "%.0f °C", tempKelvins - 273.15), location: name+", "+country, weather: description)
+        self = Weather(temperature: String(format: "%.0f °C", tempKelvins - 273.15), location: name+", "+country, weather: description)
     }
 }

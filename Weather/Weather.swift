@@ -10,14 +10,14 @@ import Foundation
 
 public struct Weather {
     
-    public let temp: String
+    public let temperature: String
     public let location: String
     public let description: String
     
-    public init(temp: String,
+    public init(temperature: String,
                 location: String,
                 weather: String) {
-        self.temp = temp
+        self.temperature = temperature
         self.location = location
         self.description = weather
     }
