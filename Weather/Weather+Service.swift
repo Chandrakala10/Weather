@@ -8,6 +8,7 @@
 
 import Foundation
 
+// JSON payload parsing extension.
 extension Weather {
     
     /// JSON keys.

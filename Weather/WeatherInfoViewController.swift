@@ -15,6 +15,7 @@ class WeatherInfoViewController: UIViewController {
     @IBOutlet weak var weatherInfo: UILabel!
     var weather: Weather!
     
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

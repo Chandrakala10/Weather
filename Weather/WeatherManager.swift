@@ -17,9 +17,10 @@ class WeatherManager: WeatherService {
     static var apiKey: String {
         return "8e4b0aff9275ed52851bbf4c6522b405"
     }
-    
+    // Weather Information array used for offline storage
     var locationsWeather = [String: Weather]()
     
+    // TODO: Add logic to check in locationsWeather array befor making service call
     func downloadWeatherData(type:ServiceAPIType, completion: @escaping WeatherServiceCallback) {
         switch type {
         case .geoLocation(let lat, let lon):
@@ -42,6 +43,7 @@ class WeatherManager: WeatherService {
                         completion(.failure(ServiceError.invalidJSON))
                     }
                 case .failure(let error):
+                    // TODO: Need to assign ServiceError
                     completion(.failure(error))
                 }
             }

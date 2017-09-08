@@ -13,12 +13,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet var doubleTap: UITapGestureRecognizer!
+    
     fileprivate lazy var weatherManager = WeatherManager()
-    
     lazy var locationManager = CLLocationManager()
-    
     var isDoubleTapped = false
     
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationAuthorizationStatus()
@@ -30,6 +30,11 @@ class ViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             mapView.showsUserLocation = true
@@ -38,14 +43,13 @@ class ViewController: UIViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    // MARK: - IBAction
     
     @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {
         isDoubleTapped = true
     }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.destination {
@@ -58,12 +62,16 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
 extension ViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
 }
+
+// MARK: - MKMapViewDelegate
 
 extension ViewController: MKMapViewDelegate {
     
@@ -81,7 +89,8 @@ extension ViewController: MKMapViewDelegate {
                                                                 switch result {
                                                                 case .success:
                                                                     self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
-                                                                case .failure(let error):
+                                                                case .failure:
+                                                                    // TODO: Need to Display error properly
                                                                     print("Display error")
                                                                     
                                                                 }
@@ -92,7 +101,7 @@ extension ViewController: MKMapViewDelegate {
         let mapRegion = MKCoordinateRegion(center:  mapView.userLocation.coordinate,
                                            span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0))
         mapView.setRegion(mapRegion, animated: true)
-
+        
     }
     
     func geoCode() -> String {
