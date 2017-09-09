@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     fileprivate lazy var weatherManager = WeatherManager()
     lazy var locationManager = CLLocationManager()
-    var isDoubleTapped = false
+    var currentLocation = CLLocationCoordinate2D()
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -46,7 +46,20 @@ class ViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {
-        isDoubleTapped = true
+        let point = sender.location(in: mapView)
+        currentLocation = mapView.convert(point, toCoordinateFrom: mapView)
+        Loader.show()
+        weatherManager.loadWeather(latitude: currentLocation.latitude, longitude: currentLocation.longitude) { [weak self] result in
+            Loader.dismiss()
+            switch result {
+            case .success:
+                self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
+            case .failure:
+                // TODO: Need to Display error properly
+                print("Display error")
+                
+            }
+        }
     }
     
     // MARK: - Navigation
@@ -75,27 +88,6 @@ extension ViewController: UIGestureRecognizerDelegate {
 
 extension ViewController: MKMapViewDelegate {
     
-    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        
-        guard isDoubleTapped else {
-            return
-        }
-        
-        isDoubleTapped = false
-        Loader.show()
-        weatherManager.loadWeather(latitude: mapView.region.center.latitude, longitude: mapView.region.center.longitude) { [weak self] result in
-            Loader.dismiss()
-            switch result {
-            case .success:
-                self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
-            case .failure:
-                // TODO: Need to Display error properly
-                print("Display error")
-                
-            }
-        }
-    }
-    
     public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let mapRegion = MKCoordinateRegion(center:  mapView.userLocation.coordinate,
                                            span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0))
@@ -104,8 +96,7 @@ extension ViewController: MKMapViewDelegate {
     }
     
     func geoCode() -> String {
-        let center = mapView.region.center
-        return weatherManager.query(latitude: center.latitude, longitude: center.longitude)
+        return weatherManager.query(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
     }
 }
 
