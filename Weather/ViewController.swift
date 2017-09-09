@@ -83,17 +83,16 @@ extension ViewController: MKMapViewDelegate {
         
         isDoubleTapped = false
         Loader.show()
-        weatherManager.downloadWeatherData(type: .geoLocation(mapView.region.center.latitude,
-                                                              mapView.region.center.longitude)) { [weak self] result in
-                                                                Loader.dismiss()
-                                                                switch result {
-                                                                case .success:
-                                                                    self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
-                                                                case .failure:
-                                                                    // TODO: Need to Display error properly
-                                                                    print("Display error")
-                                                                    
-                                                                }
+        weatherManager.loadWeather(latitude: mapView.region.center.latitude, longitude: mapView.region.center.longitude) { [weak self] result in
+            Loader.dismiss()
+            switch result {
+            case .success:
+                self?.performSegue(withIdentifier: "WeatherInfo", sender: nil)
+            case .failure:
+                // TODO: Need to Display error properly
+                print("Display error")
+                
+            }
         }
     }
     
@@ -106,7 +105,7 @@ extension ViewController: MKMapViewDelegate {
     
     func geoCode() -> String {
         let center = mapView.region.center
-        return "lat=\(center.latitude)&lon=\(center.longitude)"
+        return weatherManager.query(latitude: center.latitude, longitude: center.longitude)
     }
 }
 

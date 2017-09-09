@@ -9,46 +9,27 @@
 import Foundation
 import Alamofire
 
-class WeatherManager: WeatherService {
-    static var baseURL: String {
-        return "http://api.openweathermap.org/data/2.5/weather?"
-    }
+class WeatherManager {
+    lazy var weatherService = WeatherService()
     
-    static var apiKey: String {
-        return "8e4b0aff9275ed52851bbf4c6522b405"
-    }
-    // Weather Information array used for offline storage
     var locationsWeather = [String: Weather]()
     
     // TODO: Add logic to check in locationsWeather array befor making service call
-    func downloadWeatherData(type:ServiceAPIType, completion: @escaping WeatherServiceCallback) {
-        switch type {
-        case .geoLocation(let lat, let lon):
-            let geoCode = "lat=\(lat)&lon=\(lon)"
-            let url = URL(string:WeatherManager.baseURL+geoCode+"&appid="+WeatherManager.apiKey)!
-            Alamofire.request(url).responseJSON { [weak self]
-                response in
-                switch response.result {
-                case .success(let value) :
-                    if let json = value as? JSON {
-                        do {
-                            let weather = try Weather(weatherResponse: json, type: type)
-                            self?.locationsWeather[geoCode] = weather
-                            completion(.success(weather))
-                        } catch (let error) {
-                            completion(.failure(error))
-                        }
-                    }
-                    else {
-                        completion(.failure(ServiceError.invalidJSON))
-                    }
-                case .failure(let error):
-                    // TODO: Need to assign ServiceError
-                    completion(.failure(error))
-                }
+    func loadWeather(latitude lat: Double, longitude lon:Double,  completion: @escaping (Result<Void>) -> Void) {
+        let type = ServiceAPIType.geoLocation(lat, lon)
+        weatherService.downloadWeatherData(type: type) { [weak self] result in
+            switch result {
+            case .success(let weather) :
+                self?.locationsWeather[type.query()] = weather
+                completion(.success())
+            case .failure(let error):
+                // TODO: Need to assign ServiceError
+                completion(.failure(error))
             }
-        default:
-            break
         }
+    }
+    
+    func query(latitude lat:Double, longitude lon:Double) -> String {
+        return ServiceAPIType.geoLocation(lat, lon).query()
     }
 }
